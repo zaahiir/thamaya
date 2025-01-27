@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\PageAccessMaster;
 use Closure;
 use Illuminate\Http\Request;
 
@@ -17,9 +16,8 @@ class IsLoggedIn
      */
     public function handle(Request $request, Closure $next)
     {
-        // dd($request->session()->get('user_id'));
         if ($request->session()->get('user_id') == null) {
-            return redirect('/');
+            return redirect('/adminLogin');
         }
         return $next($request);
     }
