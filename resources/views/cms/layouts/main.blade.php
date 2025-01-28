@@ -24,6 +24,47 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        /* Add these custom styles */
+        .container-scroller {
+          display: flex;
+          flex-direction: column;
+          min-height: 100vh;
+        }
+
+        .page-body-wrapper {
+          display: flex;
+          flex: 1;
+          width: 100%;
+        }
+
+        .sidebar {
+          width: 260px;
+          flex-shrink: 0;
+          position: sticky;
+          top: 70px; /* Adjust based on navbar height */
+          height: calc(100vh - 70px);
+          overflow-y: auto;
+        }
+
+        .main-panel {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          min-width: 0;
+        }
+
+        .content-wrapper {
+          flex: 1;
+          padding: 20px;
+        }
+
+        .footer {
+          width: 100%;
+          padding: 20px;
+          margin-top: auto;
+        }
+      </style>
   </head>
   <body>
     <div class="container-scroller">
@@ -35,7 +76,9 @@
         @include('cms.layouts.sidebar')
         <!-- partial -->
         <div class="main-panel">
-          @yield('content')
+            <div class="content-wrapper">
+              @yield('content')
+            </div>
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
           @include('cms.layouts.footer')

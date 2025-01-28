@@ -19,7 +19,7 @@
       </div>
       <ul class="navbar-nav navbar-nav-right">
         <li class="nav-item nav-profile dropdown">
-          <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link" id="profileDropdown" href="#" aria-expanded="false">
             <div class="nav-profile-img">
               <img src="{{ asset('assets/img/thamaya.png') }}" alt="image">
               <span class="availability-status online"></span>
@@ -35,9 +35,9 @@
           </a>
         </li>
         <li class="nav-item nav-logout d-none d-lg-block">
-          <a class="nav-link" href="/logout">
-            <i class="mdi mdi-power"></i>
-          </a>
+            <a class="nav-link" href="{{ route('admin.logout') }}">
+                <i class="mdi mdi-power"></i>
+            </a>
         </li>
       </ul>
     </div>

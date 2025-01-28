@@ -78,6 +78,17 @@ class UserController extends Controller
         return response()->json($success_array);
     }
 
+    public function logout()
+    {
+        // Clear the custom sessions
+        session()->forget('user_id');
+        session()->forget('user_name');
+        session()->flush();
+
+        // Redirect with success message
+        return redirect()->route('admin.login')->with('success', 'Logged out successfully!');
+    }
+
     /**
      * Show the form for creating a new resource.
      */

@@ -10,9 +10,11 @@ Route::get('/', function () {
     return view('home');
 });
 
+// Public routes
 Route::post('/register', [RegistrationController::class, 'store'])->name('register.store');
 Route::any('/adminLogin', [UserController::class, 'adminLogin'])->name('admin.login');
 Route::post('/adminAuth', [UserController::class, 'adminAuth'])->name('admin.auth');
+Route::get('/logout', [UserController::class, 'logout'])->name('admin.logout');
 
 // Protected routes
 Route::middleware([IsLoggedIn::class])->group(function () {
