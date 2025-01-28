@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>RKV School Admin</title>
+    <title>Thamaya Admin</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset("cms/assets/vendors/mdi/css/materialdesignicons.min.css") }}">
     <link rel="stylesheet" href="{{ asset("cms/assets/vendors/ti-icons/css/themify-icons.css") }}">

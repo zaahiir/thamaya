@@ -17,5 +17,5 @@ Route::post('/adminAuth', [UserController::class, 'adminAuth'])->name('admin.aut
 // Protected routes
 Route::middleware([IsLoggedIn::class])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-    Route::get('/cms/registrations', [RegistrationController::class, 'index'])->name('cms.registrations');
+    Route::get('/registrations', [RegistrationController::class, 'index'])->name('cms.registrations');
 });

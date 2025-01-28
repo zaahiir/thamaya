@@ -15,14 +15,8 @@
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/dashboard">
-          <span class="menu-title">Dashboard</span>
-          <i class="mdi mdi-home menu-icon"></i>
-        </a>
-      </li>
-      <li class="nav-item">
-          <a class="nav-link" href="/cms/registrations">
-              <span class="menu-title">Enroll</span>
+          <a class="nav-link" href="/registrations">
+              <span class="menu-title">Enquires</span>
               <i class="mdi mdi-school menu-icon"></i>
           </a>
       </li>
