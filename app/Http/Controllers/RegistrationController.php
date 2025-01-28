@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;  // Added this import
+use Illuminate\Support\Str;
 
 class RegistrationController extends Controller
 {
@@ -17,18 +18,26 @@ class RegistrationController extends Controller
 
     public function getData()
     {
-        $registrations = Registration::select([
-            'id', 'name', 'contact_no', 'mail_id', 'company_name',
-            'product_details', 'city', 'state'
-        ]);
+        try {
+            $registrations = Registration::select([
+                'id', 'name', 'contact_no', 'mail_id', 'company_name',
+                'product_details', 'city', 'state'
+            ]);
 
-        return DataTables::of($registrations)
-            ->addIndexColumn()
-            ->addColumn('action', function($row){
-                return '<button type="button" class="btn btn-primary btn-sm view-details" data-id="'.$row->id.'">View More</button>';
-            })
-            ->rawColumns(['action'])
-            ->make(true);
+            return DataTables::of($registrations)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    return '<button type="button" class="btn btn-primary btn-sm view-details" data-id="'.$row->id.'">View More</button>';
+                })
+                ->editColumn('product_details', function($row) {
+                    return Str::limit($row->product_details, 50);
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        } catch (\Exception $e) {
+            Log::error('DataTables Error: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
     public function show($id)

@@ -111,12 +111,18 @@
 <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
 <script>
 $(document).ready(function() {
-    let table = $('#registrationsTable').DataTable({
+    $('#registrationsTable').DataTable({
         processing: true,
         serverSide: true,
-        ajax: "{{ route('registrations.data') }}", // You'll need to create this route
+        ajax: {
+            url: "{{ route('registrations.data') }}",
+            type: 'GET',
+            error: function(xhr, error, thrown) {
+                console.log('DataTables error:', error);
+            }
+        },
         columns: [
-            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
             {data: 'name', name: 'name'},
             {data: 'contact_no', name: 'contact_no'},
             {data: 'mail_id', name: 'mail_id'},
@@ -133,51 +139,57 @@ $(document).ready(function() {
                 data: 'action',
                 name: 'action',
                 orderable: false,
-                searchable: false,
-                render: function(data, type, row) {
-                    return `<button type="button" class="btn btn-primary btn-sm view-details" data-id="${row.id}">View More</button>`;
-                }
+                searchable: false
             }
         ],
-        order: [[0, 'asc']],
-        pageLength: 10
+        order: [[1, 'asc']], // Order by name column
+        pageLength: 10,
+        language: {
+            processing: '<i class="fa fa-spinner fa-spin fa-3x fa-fw"></i>',
+            zeroRecords: 'No matching records found',
+            lengthMenu: 'Show _MENU_ entries',
+            info: 'Showing _START_ to _END_ of _TOTAL_ entries',
+            infoEmpty: 'Showing 0 to 0 of 0 entries',
+            infoFiltered: '(filtered from _MAX_ total entries)'
+        }
     });
 
-    // Handle View More button click
+    // View Details Modal Handler
     $('#registrationsTable').on('click', '.view-details', function() {
         let id = $(this).data('id');
         $.ajax({
-            url: `/registrations/${id}`, // You'll need to create this route
+            url: `/registrations/${id}`,
             method: 'GET',
             success: function(response) {
                 // Populate modal with registration details
-                $('#modal-name').text(response.name);
-                $('#modal-father-spouse').text(response.father_spouse_name);
-                $('#modal-address').text(response.address);
-                $('#modal-locality').text(response.locality_area);
-                $('#modal-city').text(response.city);
-                $('#modal-district').text(response.district);
-                $('#modal-state').text(response.state);
-                $('#modal-contact').text(response.contact_no);
-                $('#modal-alt-contact').text(response.alternative_no);
-                $('#modal-email').text(response.mail_id);
-                $('#modal-age').text(response.age);
-                $('#modal-dob').text(response.date_of_birth);
-                $('#modal-marital').text(response.marital_status);
-                $('#modal-family').text(response.family_members);
-                $('#modal-company').text(response.company_name);
-                $('#modal-company-address').text(response.company_address);
-                $('#modal-product').text(response.product_details);
-                $('#modal-category').text(response.product_category);
-                $('#modal-audience').text(response.target_audience);
-                $('#modal-social').text(response.social_media_links);
-                $('#modal-cost').text(response.product_cost);
-                $('#modal-services').text(response.services_needed);
+                $('#modal-name').text(response.name || '-');
+                $('#modal-father-spouse').text(response.father_spouse_name || '-');
+                $('#modal-address').text(response.address || '-');
+                $('#modal-locality').text(response.locality_area || '-');
+                $('#modal-city').text(response.city || '-');
+                $('#modal-district').text(response.district || '-');
+                $('#modal-state').text(response.state || '-');
+                $('#modal-contact').text(response.contact_no || '-');
+                $('#modal-alt-contact').text(response.alternative_no || '-');
+                $('#modal-email').text(response.mail_id || '-');
+                $('#modal-age').text(response.age || '-');
+                $('#modal-dob').text(response.date_of_birth || '-');
+                $('#modal-marital').text(response.marital_status || '-');
+                $('#modal-family').text(response.family_members || '-');
+                $('#modal-company').text(response.company_name || '-');
+                $('#modal-company-address').text(response.company_address || '-');
+                $('#modal-product').text(response.product_details || '-');
+                $('#modal-category').text(response.product_category || '-');
+                $('#modal-audience').text(response.target_audience || '-');
+                $('#modal-social').text(response.social_media_links || '-');
+                $('#modal-cost').text(response.product_cost || '-');
+                $('#modal-services').text(response.services_needed || '-');
 
                 $('#viewModal').modal('show');
             },
             error: function(xhr) {
                 alert('Error fetching registration details');
+                console.log(xhr);
             }
         });
     });
