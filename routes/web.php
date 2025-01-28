@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
-use App\Http\Controllers\CMS\DashboardController;
 use App\Http\Controllers\CMS\UserController;
 use App\Http\Middleware\IsLoggedIn;
 
