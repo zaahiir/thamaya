@@ -5,14 +5,12 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Thamaya registration</title>
       <link rel="icon" href="favicon.ico" type="image/x-icon">
-      <!-- Bootstrap CSS -->
       <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-      <!-- Bootstrap CDN for responsive layout -->
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-      <!-- Google Fonts -->
       <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
-      <!-- Animate.css for additional animations -->
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+      <!-- SweetAlert2 CSS -->
+      <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
       <style>
          body {
          padding: 0;
@@ -139,11 +137,46 @@
 
         .btn-submit:focus {
         outline: none; /* Remove focus outline */
-}
+        }
+
+        .alert-success {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #0d484e;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+            animation: slideIn 0.5s ease-out;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+         }
+
+         @keyframes slideIn {
+            from {
+               transform: translateX(100%);
+               opacity: 0;
+            }
+            to {
+               transform: translateX(0);
+               opacity: 1;
+            }
+         }
+
+         .alert-success.show {
+            display: block;
+         }
+         .swal2-popup {
+             font-family: 'Poppins', sans-serif;
+         }
 
       </style>
    </head>
    <body>
+    <div id="successAlert" class="alert-success">
+       Registration submitted successfully!
+    </div>
       <section class="thamaya_sec">
          <div class="container">
             <div class="animate__animated animate__fadeIn position-relative pt-5">
@@ -161,7 +194,7 @@
             </div>
          </div>
          <div class="container">
-            <form class="px-0 px-md-5" method="POST" action="{{ route('register.store') }}">
+            <form id="registrationForm" class="px-0 px-md-5" method="POST" action="{{ route('register.store') }}">
                 @csrf
                 <div class="row mb-3">
                     <div class="form_smx col-md-12 d-flex mt-3">
@@ -263,9 +296,64 @@
             </form>
          </div>
       </section>
-      <!-- Bootstrap JS and dependencies (jQuery and Popper.js) -->
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+      <!-- Required Scripts -->
+      <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.6/dist/umd/popper.min.js"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+      <!-- SweetAlert2 JS -->
+      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+      <script>
+         $(document).ready(function() {
+             $('#registrationForm').on('submit', function(e) {
+                 e.preventDefault();
+
+                 let form = $(this);
+                 let submitButton = form.find('button[type="submit"]');
+
+                 // Disable submit button to prevent double submission
+                 submitButton.prop('disabled', true);
+
+                 $.ajax({
+                     url: form.attr('action'),
+                     method: 'POST',
+                     data: new FormData(this),
+                     processData: false,
+                     contentType: false,
+                     success: function(response) {
+                         // Show success message
+                         Swal.fire({
+                             title: 'Success!',
+                             text: 'Registration submitted successfully!',
+                             icon: 'success',
+                             confirmButtonColor: '#0d484e',
+                             timer: 2000,
+                             timerProgressBar: true
+                         }).then(() => {
+                             // Reset form
+                             form[0].reset();
+
+                             // Optionally reload page for fresh start
+                             window.location.reload();
+                         });
+                     },
+                     error: function(xhr) {
+                         // Show error message
+                         Swal.fire({
+                             title: 'Error!',
+                             text: 'There was an error submitting the form. Please try again.',
+                             icon: 'error',
+                             confirmButtonColor: '#0d484e'
+                         });
+                     },
+                     complete: function() {
+                         // Re-enable submit button
+                         submitButton.prop('disabled', false);
+                     }
+                 });
+             });
+         });
+      </script>
    </body>
 </html>
