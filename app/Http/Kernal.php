@@ -49,6 +49,5 @@ class Kernel extends HttpKernel
      */
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class,
-        'check.page.access' => \App\Http\Middleware\CheckPageAccess::class,
     ];
 }

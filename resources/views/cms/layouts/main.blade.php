@@ -4,7 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Purple Admin</title>
+    <title>Thamaya Admin</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('cms/assets/vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('cms/assets/vendors/ti-icons/css/themify-icons.css') }}">
@@ -20,7 +20,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{ asset('cms/assets/css/style.css') }}">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="{{ asset('assets/img/logo1.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('assets/img/thamaya.png') }}" />
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
   </head>

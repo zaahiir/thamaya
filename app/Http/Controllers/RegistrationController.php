@@ -9,7 +9,7 @@ class RegistrationController extends Controller
 {
     public function index()
     {
-        $registrations = Registration::orderBy('created_at', 'desc')->paginate(10);
+        $registrations = Registration::orderBy('created_at', 'asc')->paginate(10);
         return view('cms.registrations.index', compact('registrations'));
     }
 
