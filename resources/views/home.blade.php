@@ -3,6 +3,7 @@
    <head>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="csrf-token" content="{{ csrf_token() }}">
       <title>Thamaya registration</title>
       <link rel="icon" href="favicon.ico" type="image/x-icon">
       <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -305,55 +306,62 @@
       <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
       <script>
-         $(document).ready(function() {
-             $('#registrationForm').on('submit', function(e) {
-                 e.preventDefault();
+        $(document).ready(function() {
+            // Set up CSRF token for all AJAX requests
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-                 let form = $(this);
-                 let submitButton = form.find('button[type="submit"]');
+            $('#registrationForm').on('submit', function(e) {
+                e.preventDefault();
 
-                 // Disable submit button to prevent double submission
-                 submitButton.prop('disabled', true);
+                let form = $(this);
+                let submitButton = form.find('button[type="submit"]');
 
-                 $.ajax({
-                     url: form.attr('action'),
-                     method: 'POST',
-                     data: new FormData(this),
-                     processData: false,
-                     contentType: false,
-                     success: function(response) {
-                         // Show success message
-                         Swal.fire({
-                             title: 'Success!',
-                             text: 'Registration submitted successfully!',
-                             icon: 'success',
-                             confirmButtonColor: '#0d484e',
-                             timer: 2000,
-                             timerProgressBar: true
-                         }).then(() => {
-                             // Reset form
-                             form[0].reset();
+                // Disable submit button to prevent double submission
+                submitButton.prop('disabled', true);
 
-                             // Optionally reload page for fresh start
-                             window.location.reload();
-                         });
-                     },
-                     error: function(xhr) {
-                         // Show error message
-                         Swal.fire({
-                             title: 'Error!',
-                             text: 'There was an error submitting the form. Please try again.',
-                             icon: 'error',
-                             confirmButtonColor: '#0d484e'
-                         });
-                     },
-                     complete: function() {
-                         // Re-enable submit button
-                         submitButton.prop('disabled', false);
-                     }
-                 });
-             });
-         });
-      </script>
+                $.ajax({
+                    url: form.attr('action'),
+                    method: 'POST',
+                    data: new FormData(this),
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                        // Show success message
+                        Swal.fire({
+                            title: 'Success!',
+                            text: 'Registration submitted successfully!',
+                            icon: 'success',
+                            confirmButtonColor: '#0d484e',
+                            timer: 2000,
+                            timerProgressBar: true
+                        }).then(() => {
+                            // Reset form
+                            form[0].reset();
+
+                            // Optionally reload page for fresh start
+                            window.location.reload();
+                        });
+                    },
+                    error: function(xhr) {
+                        // Show error message
+                        Swal.fire({
+                            title: 'Error!',
+                            text: 'There was an error submitting the form. Please try again.',
+                            icon: 'error',
+                            confirmButtonColor: '#0d484e'
+                        });
+                    },
+                    complete: function() {
+                        // Re-enable submit button
+                        submitButton.prop('disabled', false);
+                    }
+                });
+            });
+        });
+        </script>
    </body>
 </html>
