@@ -17,10 +17,10 @@
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered table-hover">
+                <table id="registrationsTable" class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th>ID</th>
+                            <th>S.No</th>
                             <th>Name</th>
                             <th>Contact</th>
                             <th>Email</th>
@@ -30,80 +30,59 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach($registrations as $registration)
-                        <tr>
-                            <td>{{ $registration->id }}</td>
-                            <td>{{ $registration->name }}</td>
-                            <td>{{ $registration->contact_no }}</td>
-                            <td>{{ $registration->mail_id }}</td>
-                            <td>{{ $registration->company_name }}</td>
-                            <td>{{ $registration->product_details }}</td>
-                            <td>{{ $registration->city }}, {{ $registration->state }}</td>
-                            <td>
-                                <button type="button" class="btn btn-primary btn-sm"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#viewModal{{ $registration->id }}">
-                                    View More
-                                </button>
-                            </td>
-                        </tr>
-
-                        <!-- Modal for each registration -->
-                        <div class="modal fade" id="viewModal{{ $registration->id }}" tabindex="-1" aria-hidden="true">
-                            <div class="modal-dialog modal-lg">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Registration Details</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <p><strong>Name:</strong> {{ $registration->name }}</p>
-                                                <p><strong>Father/Spouse Name:</strong> {{ $registration->father_spouse_name }}</p>
-                                                <p><strong>Address:</strong> {{ $registration->address }}</p>
-                                                <p><strong>Locality/Area:</strong> {{ $registration->locality_area }}</p>
-                                                <p><strong>City:</strong> {{ $registration->city }}</p>
-                                                <p><strong>District:</strong> {{ $registration->district }}</p>
-                                                <p><strong>State:</strong> {{ $registration->state }}</p>
-                                                <p><strong>Contact:</strong> {{ $registration->contact_no }}</p>
-                                                <p><strong>Alternative Contact:</strong> {{ $registration->alternative_no }}</p>
-                                                <p><strong>Email:</strong> {{ $registration->mail_id }}</p>
-                                                <p><strong>Age:</strong> {{ $registration->age }}</p>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p><strong>Date of Birth:</strong> {{ $registration->date_of_birth }}</p>
-                                                <p><strong>Marital Status:</strong> {{ $registration->marital_status }}</p>
-                                                <p><strong>Family Members:</strong> {{ $registration->family_members }}</p>
-                                                <p><strong>Company Name:</strong> {{ $registration->company_name }}</p>
-                                                <p><strong>Company Address:</strong> {{ $registration->company_address }}</p>
-                                                <p><strong>Product Details:</strong> {{ $registration->product_details }}</p>
-                                                <p><strong>Product Category:</strong> {{ $registration->product_category }}</p>
-                                                <p><strong>Target Audience:</strong> {{ $registration->target_audience }}</p>
-                                                <p><strong>Social Media Links:</strong> {{ $registration->social_media_links }}</p>
-                                                <p><strong>Product Cost:</strong> {{ $registration->product_cost }}</p>
-                                                <p><strong>Services Needed:</strong> {{ $registration->services_needed }}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        @endforeach
-                    </tbody>
                 </table>
-            </div>
-            <div class="d-flex justify-content-center">
-                {{ $registrations->links() }}
             </div>
         </div>
     </div>
 </div>
 
+<!-- Modal for registration details -->
+<div class="modal fade" id="viewModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Registration Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>Name:</strong> <span id="modal-name"></span></p>
+                        <p><strong>Father/Spouse Name:</strong> <span id="modal-father-spouse"></span></p>
+                        <p><strong>Address:</strong> <span id="modal-address"></span></p>
+                        <p><strong>Locality/Area:</strong> <span id="modal-locality"></span></p>
+                        <p><strong>City:</strong> <span id="modal-city"></span></p>
+                        <p><strong>District:</strong> <span id="modal-district"></span></p>
+                        <p><strong>State:</strong> <span id="modal-state"></span></p>
+                        <p><strong>Contact:</strong> <span id="modal-contact"></span></p>
+                        <p><strong>Alternative Contact:</strong> <span id="modal-alt-contact"></span></p>
+                        <p><strong>Email:</strong> <span id="modal-email"></span></p>
+                        <p><strong>Age:</strong> <span id="modal-age"></span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Date of Birth:</strong> <span id="modal-dob"></span></p>
+                        <p><strong>Marital Status:</strong> <span id="modal-marital"></span></p>
+                        <p><strong>Family Members:</strong> <span id="modal-family"></span></p>
+                        <p><strong>Company Name:</strong> <span id="modal-company"></span></p>
+                        <p><strong>Company Address:</strong> <span id="modal-company-address"></span></p>
+                        <p><strong>Product Details:</strong> <span id="modal-product"></span></p>
+                        <p><strong>Product Category:</strong> <span id="modal-category"></span></p>
+                        <p><strong>Target Audience:</strong> <span id="modal-audience"></span></p>
+                        <p><strong>Social Media Links:</strong> <span id="modal-social"></span></p>
+                        <p><strong>Product Cost:</strong> <span id="modal-cost"></span></p>
+                        <p><strong>Services Needed:</strong> <span id="modal-services"></span></p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@push('styles')
+<link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css">
 <style>
     .card {
         border-radius: 15px;
@@ -112,10 +91,6 @@
     .table th {
         background-color: #0d484e;
         color: white;
-    }
-    .pagination {
-        justify-content: center;
-        margin-top: 20px;
     }
     .modal-body p {
         margin-bottom: 0.5rem;
@@ -129,4 +104,84 @@
         border-color: #0a3539;
     }
 </style>
+@endpush
+
+@push('scripts')
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script>
+$(document).ready(function() {
+    let table = $('#registrationsTable').DataTable({
+        processing: true,
+        serverSide: true,
+        ajax: "{{ route('registrations.data') }}", // You'll need to create this route
+        columns: [
+            {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'name', name: 'name'},
+            {data: 'contact_no', name: 'contact_no'},
+            {data: 'mail_id', name: 'mail_id'},
+            {data: 'company_name', name: 'company_name'},
+            {data: 'product_details', name: 'product_details'},
+            {
+                data: null,
+                name: 'location',
+                render: function(data) {
+                    return data.city + ', ' + data.state;
+                }
+            },
+            {
+                data: 'action',
+                name: 'action',
+                orderable: false,
+                searchable: false,
+                render: function(data, type, row) {
+                    return `<button type="button" class="btn btn-primary btn-sm view-details" data-id="${row.id}">View More</button>`;
+                }
+            }
+        ],
+        order: [[0, 'asc']],
+        pageLength: 10
+    });
+
+    // Handle View More button click
+    $('#registrationsTable').on('click', '.view-details', function() {
+        let id = $(this).data('id');
+        $.ajax({
+            url: `/registrations/${id}`, // You'll need to create this route
+            method: 'GET',
+            success: function(response) {
+                // Populate modal with registration details
+                $('#modal-name').text(response.name);
+                $('#modal-father-spouse').text(response.father_spouse_name);
+                $('#modal-address').text(response.address);
+                $('#modal-locality').text(response.locality_area);
+                $('#modal-city').text(response.city);
+                $('#modal-district').text(response.district);
+                $('#modal-state').text(response.state);
+                $('#modal-contact').text(response.contact_no);
+                $('#modal-alt-contact').text(response.alternative_no);
+                $('#modal-email').text(response.mail_id);
+                $('#modal-age').text(response.age);
+                $('#modal-dob').text(response.date_of_birth);
+                $('#modal-marital').text(response.marital_status);
+                $('#modal-family').text(response.family_members);
+                $('#modal-company').text(response.company_name);
+                $('#modal-company-address').text(response.company_address);
+                $('#modal-product').text(response.product_details);
+                $('#modal-category').text(response.product_category);
+                $('#modal-audience').text(response.target_audience);
+                $('#modal-social').text(response.social_media_links);
+                $('#modal-cost').text(response.product_cost);
+                $('#modal-services').text(response.services_needed);
+
+                $('#viewModal').modal('show');
+            },
+            error: function(xhr) {
+                alert('Error fetching registration details');
+            }
+        });
+    });
+});
+</script>
+@endpush
 @endsection
