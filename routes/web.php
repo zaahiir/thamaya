@@ -18,6 +18,5 @@ Route::get('/logout', [UserController::class, 'logout'])->name('admin.logout');
 
 // Protected routes
 Route::middleware([IsLoggedIn::class])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
     Route::get('/registrations', [RegistrationController::class, 'index'])->name('cms.registrations');
 });

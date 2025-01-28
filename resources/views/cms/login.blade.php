@@ -9,10 +9,9 @@
     <link rel="stylesheet" href="{{ asset('cms/assets/vendors/ti-icons/css/themify-icons.css') }}">
     <link rel="stylesheet" href="{{ asset('cms/assets/vendors/css/vendor.bundle.base.css') }}">
     <link rel="stylesheet" href="{{ asset('cms/assets/vendors/font-awesome/css/font-awesome.min.css') }}">
-    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{ asset('cms/assets/css/style.css') }}">
-    <link rel="shortcut icon" href="{{ asset('assets/img/logo1.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('assets/img/thamaya.png') }}" />
   </head>
   <body>
     <div class="container-scroller">
@@ -53,18 +52,11 @@
     <script src="{{ asset('cms/assets/js/settings.js') }}"></script>
     <script src="{{ asset('cms/assets/js/todolist.js') }}"></script>
     <script src="{{ asset('cms/assets/js/jquery.cookie.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
         $(document).ready(function() {
             @if(session('success'))
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Success!',
-                    text: "{{ session('success') }}",
-                    timer: 3000,
-                    showConfirmButton: false
-                });
+                alert("{{ session('success') }}");
             @endif
 
             $("#loginForm").submit(function(e) {
@@ -81,22 +73,14 @@
                     dataType: 'json',
                     success: function(response) {
                         if (response.data.code === 1) {
-                            window.location.href = '/dashboard';
+                            window.location.href = '/registrations';
                         } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Failed!',
-                                text: response.data.message
-                            });
+                            alert(response.data.message);
                         }
                     },
                     error: function(xhr, status, error) {
                         console.error(error);
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: 'An unexpected error occurred'
-                        });
+                        alert('An unexpected error occurred');
                     }
                 });
             });
